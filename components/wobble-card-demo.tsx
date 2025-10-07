@@ -15,7 +15,7 @@ export default function WobbleCardDemo() {
           Retroalimentación inteligente y personalizada
           </h2>
           <p className="mt-4 text-left  text-base/6 text-neutral-200">
-          EducAI analiza automáticamente las tareas y genera comentarios específicos para cada estudiante. El docente visualiza en tiempo real el nivel de comprensión, fortalezas y aspectos a mejorar, optimizando su tiempo y el acompañamiento individual.          </p>
+          El docente visualiza en tiempo real el nivel de comprensión, fortalezas y aspectos a mejorar, optimizando su tiempo y el acompañamiento individual.          </p>
         </div>
         <img
           src="/images/retroalimentación-sc.png"
