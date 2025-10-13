@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+/* Seguridad: elimina margenes del user-agent que pueden introducir "huecos" */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 /* === Aurora Background === */
 .aurora-container {
   width: 100%;
@@ -9,9 +15,9 @@
 }
 
 .aurora-bg {
-  position: absolute;   /* ocupa todo el contenedor padre */
+  position: absolute;
   inset: 0;
-  pointer-events: none; /* no bloquea clics del contenido */
+  pointer-events: none;
   z-index: 0;
 }
 
@@ -34,7 +40,6 @@
   font-weight: 900;
   cursor: pointer;
   transition: filter 0.3s ease, color 0.3s ease;
-  /* tamaño responsive similar a tu h1 */
   font-size: clamp(2.5rem, 6.5vw, 4.2rem);
   line-height: 1.05;
 }
@@ -60,22 +65,163 @@
 .top-left    { top: -10px; left: -10px;   border-right: none; border-bottom: none; }
 .top-right   { top: -10px; right: -10px;  border-left: none;  border-bottom: none; }
 .bottom-left { bottom: -10px; left: -10px; border-right: none; border-top: none; }
-.bottom-right{ bottom: -10px; right: -10px;border-left: none;  border-top: none; }
-
+.bottom-right{ bottom: -10px; right: -10px; border-left: none;  border-top: none; }
 
 /* TextType */
-
 .text-type {
   display: inline-block;
   white-space: pre-wrap;
 }
 
+.text-type__content {
+  transition: color 200ms ease;
+}
+
+@keyframes text-type-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
 .text-type__cursor {
   margin-left: 0.25rem;
   display: inline-block;
-  opacity: 1;
+  animation-name: text-type-blink;
+  animation-timing-function: steps(1, end);
+  animation-iteration-count: infinite;
+  animation-duration: 0.8s;
 }
 
 .text-type__cursor--hidden {
-  display: none;
+  opacity: 0;
+  animation-play-state: paused;
+}
+
+:root {
+  --nav-h: 76px;
+  --section-py-sm: 4rem;
+  --section-py-md: 6rem;
+}
+
+.section {
+  padding-block: var(--section-py-sm);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: var(--section-py-md);
+  }
+}
+
+/* Scroll suave base y accesible */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-h: 64px;
+  }
+}
+
+/* Suaviza el paso Hero -> Dashboard */
+.mask-bottom-fade {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+}
+
+/* Storytelling CSS-only */
+.story-pin {
+  position: relative;
+  display: grid;
+  gap: 4rem;
+}
+
+.story-slide {
+  position: relative;
+  min-height: clamp(520px, 70svh, 760px);
+}
+
+.story-sticky {
+  position: sticky;
+  top: calc(var(--nav-h) + 2rem);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  .story-sticky { position: static; top: auto; }
+}
+
+.story-slide .story-sticky {
+  opacity: 0.92;
+  transform: translateY(8px) scale(0.995);
+  transition: opacity .4s ease-out, transform .4s ease-out;
+}
+
+.story-slide:target .story-sticky,
+.story-slide:is(:hover, :focus-within) .story-sticky {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@supports (animation-timeline: scroll()) {
+  @keyframes fadeScroll {
+    from { transform: scale(0.995); }
+    to { transform: scale(1); }
+  }
+
+  .scroll-fade {
+    animation: fadeScroll both ease-out;
+    animation-timeline: scroll(root);
+    animation-duration: .8s;
+  }
+}
+
+/* ===============================
+   Slide-up reveal para FeaturesGrid
+   (se dispara una sola vez por IO)
+=============================== */
+.section-reveal .reveal-up--title,
+.section-reveal .reveal-up--desc,
+.section-reveal .reveal-up--card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: transform .6s ease-out, opacity .6s ease-out;
+  will-change: transform, opacity;
+}
+
+.section-reveal.is-visible .reveal-up--title,
+.section-reveal.is-visible .reveal-up--desc,
+.section-reveal.is-visible .reveal-up--card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-reveal.is-visible .reveal-up--title    { transition-delay: 0ms; }
+.section-reveal.is-visible .reveal-up--desc     { transition-delay: 90ms; }
+.section-reveal.is-visible .reveal-up--card:nth-child(1) { transition-delay: 160ms; }
+.section-reveal.is-visible .reveal-up--card:nth-child(2) { transition-delay: 230ms; }
+.section-reveal.is-visible .reveal-up--card:nth-child(3) { transition-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal .reveal-up--title,
+  .section-reveal .reveal-up--desc,
+  .section-reveal .reveal-up--card {
+    transform: none !important;
+    transition: opacity .2s linear;
+  }
 }
