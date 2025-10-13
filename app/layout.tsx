@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ToastProviderClient } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import type { ReactNode } from "react";
 
 const inter = Inter({
@@ -18,7 +20,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es" className={`scroll-smooth ${inter.variable}`}>
-      <body className={`bg-black text-white antialiased ${inter.className}`}>{children}</body>
+      <body className={`bg-black text-white antialiased ${inter.className}`}>
+        <ToastProviderClient>
+          {children}
+          <Toaster />
+        </ToastProviderClient>
+      </body>
     </html>
   );
 }
