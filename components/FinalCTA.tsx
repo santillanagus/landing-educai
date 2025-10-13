@@ -7,86 +7,83 @@ import { useToast } from "@/components/ui/use-toast";
 
 export default function FinalCTA() {
   const { toast } = useToast();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [gotcha, setGotcha] = useState(""); // honeypot
+  const [submitting, setSubmitting] = useState(false);
+  const [gotcha, setGotcha] = useState("");
 
-  const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+  const ENDPOINT = "https://formspree.io/f/mpwyoowy";
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (loading) return;
+    if (submitting) return;
 
-    if (gotcha.trim() !== "") return;
-
-    if (!name.trim() || !email.trim()) {
-      toast({
-        title: "Faltan datos",
-        description: "Por favor completa tu nombre y correo electrónico.",
-        variant: "destructive",
-      });
+    if (gotcha.trim() !== "") {
       return;
     }
 
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!emailOk) {
-      toast({
-        title: "Correo inválido",
-        description: "Revisa el formato del email.",
-        variant: "destructive",
-      });
-      return;
-    }
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: (formData.get("name") || "").toString(),
+      email: (formData.get("email") || "").toString(),
+      role: (formData.get("role") || "").toString(),
+      ua: typeof navigator !== "undefined" ? navigator.userAgent : "",
+    };
 
-    if (!endpoint) {
+    if (!payload.email.trim()) {
       toast({
-        title: "Configuración faltante",
-        description:
-          "No está definida NEXT_PUBLIC_FORMSPREE_ENDPOINT en .env.local",
-        variant: "destructive",
+        title: "Correo requerido",
+        description: "Por favor ingresa un correo electronico valido.",
       });
       return;
     }
 
     try {
-      setLoading(true);
-      const res = await fetch(endpoint, {
+      setSubmitting(true);
+
+      const res = await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          role,
-          ua: typeof navigator !== "undefined" ? navigator.userAgent : "",
-        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
-        setName("");
-        setEmail("");
-        setRole("");
-        toast({
-          title: "¡Enviado!",
-          description:
-            "Gracias por unirte a la lista de espera. Te contactaremos pronto.",
-        });
-      } else {
+      if (process.env.NODE_ENV !== "production") {
+        console.debug("[Formspree] POST ->", ENDPOINT, res.status, res.statusText);
+      }
+
+      const rawText = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        // respuesta sin JSON, se usa texto crudo
+      }
+
+      if (!res.ok) {
+        const msg = data?.error || data?.message || rawText || "Error desconocido en el envio.";
         toast({
           title: "No se pudo enviar",
-          description: "Inténtalo nuevamente en unos segundos.",
-          variant: "destructive",
+          description: `(${res.status}) ${msg.slice(0, 300)}`,
         });
+        return;
       }
-    } catch {
+
+      toast({
+        title: "Enviado correctamente",
+        description: "Gracias por unirte a la lista de espera.",
+      });
+
+      form.reset();
+      setGotcha("");
+    } catch (err: any) {
       toast({
         title: "Error de red",
-        description: "No pudimos contactar al servidor.",
-        variant: "destructive",
+        description: String(err?.message || err).slice(0, 300),
       });
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   }
 
@@ -99,9 +96,9 @@ export default function FinalCTA() {
         </div>
 
         <div className="relative text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Únete a la lista de espera</h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Unete a la lista de espera</h2>
           <p className="mt-4 text-base/7 text-white/70">
-            Entérate primero de las novedades y lanzamientos de EducAI para tu institución o aula.
+            Enterate primero de las novedades y lanzamientos de EducAI para tu institucion o aula.
           </p>
         </div>
 
@@ -118,7 +115,7 @@ export default function FinalCTA() {
             tabIndex={-1}
             autoComplete="off"
             value={gotcha}
-            onChange={(e) => setGotcha(e.target.value)}
+            onChange={event => setGotcha(event.target.value)}
           />
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -130,17 +127,14 @@ export default function FinalCTA() {
                 id="name"
                 name="name"
                 type="text"
-                required
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition-colors focus:border-[#fd4c61] focus:outline-none focus:ring-1 focus:ring-[#fd4c61]"
                 placeholder="Tu nombre completo"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
               />
             </div>
 
             <div className="space-y-2 text-left">
               <label htmlFor="email" className="text-sm font-medium text-white/80">
-                Correo electrónico
+                Correo electronico
               </label>
               <input
                 id="email"
@@ -149,44 +143,41 @@ export default function FinalCTA() {
                 required
                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition-colors focus:border-[#fd4c61] focus:outline-none focus:ring-1 focus:ring-[#fd4c61]"
                 placeholder="tu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
 
           <div className="space-y-2 text-left">
             <label htmlFor="role" className="text-sm font-medium text-white/80">
-              ¿Cuál es tu rol? (opcional)
+              Cual es tu rol (opcional)
             </label>
             <select
               id="role"
               name="role"
               className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white transition-colors focus:border-[#fd4c61] focus:outline-none focus:ring-1 focus:ring-[#fd4c61] [&>option]:bg-white [&>option]:text-black"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
             >
-              <option value="">Selecciona una opción</option>
-              <option value="Profesor/a">Profesor/a</option>
+              <option value="">Selecciona una opcion</option>
               <option value="Estudiante">Estudiante</option>
-              <option value="Institución">Institución</option>
+              <option value="Docente">Docente</option>
+              <option value="Directivo">Directivo</option>
               <option value="Otro">Otro</option>
             </select>
           </div>
 
           <Button
             type="submit"
-            disabled={loading}
+            disabled={submitting}
             className="w-full rounded-xl bg-[#fd4c61] py-4 text-lg font-medium text-white shadow-lg shadow-[#fd4c61]/30 transition hover:bg-[#fd4c61]/90 disabled:opacity-70"
           >
-            {loading ? "Enviando..." : "Unirme a la lista de espera"}
+            {submitting ? "Enviando..." : "Unirme a la lista de espera"}
           </Button>
         </form>
 
         <p className="relative mt-6 text-center text-sm text-white/40">
-          Tu información está segura. No compartimos datos con terceros.
+          Tu informacion esta segura. No compartimos datos con terceros.
         </p>
       </div>
     </section>
   );
 }
+
