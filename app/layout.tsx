@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ToastProviderClient } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
           <Toaster />
         </ToastProviderClient>
+        <Analytics /> 
       </body>
     </html>
   );
