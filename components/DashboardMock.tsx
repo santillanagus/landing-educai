@@ -2,19 +2,22 @@ import Image from "next/image";
 
 const SCENES = [
   {
-    title: "Seguimiento en tiempo real",
-    description: "Visualiza el rendimiento con metricas claras mientras navegas.",
+    title: "Dashboard simple y fácil de usar",
+    description:
+      "Seguimiento en tiempo real de asistencia, entregas y progreso. Visualizá métricas claras mientras navegás, detectá desvíos al instante y tomá acción sin salir de tu flujo de trabajo.",
     imageSrc: "/images/dashboard-banner.webp",
   },
   {
-    title: "Informacion accionable",
-    description: "Identifica patrones y oportunidades de mejora sin esfuerzo.",
-    imageSrc: "/images/dashboard-banner.webp",
+    title: "Retroalimentación inteligente",
+    description:
+      "Recibí análisis automáticos y sugerencias personalizadas para cada alumno y cada clase. Identificá oportunidades de mejora y obtené comentarios listos para compartir en segundos.",
+    imageSrc: "/images/retroalimentacion-sc.webp",
   },
   {
-    title: "Decisiones con confianza",
-    description: "Toma decisiones basadas en datos con una vista simple e intuitiva.",
-    imageSrc: "/images/dashboard-banner.webp",
+    title: "Áreas de mejora con foco",
+    description:
+      "Priorizá acciones concretas por curso y tema con una vista simple e intuitiva. Planificá intervenciones que impacten y hacé seguimiento con recomendaciones y alertas contextuales.",
+    imageSrc: "/images/areas-de-mejora.webp",
   },
 ];
 

@@ -96,9 +96,10 @@ export default function FinalCTA() {
         </div>
 
         <div className="relative text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Unete a la lista de espera</h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Unite a la lista de espera</h2>
           <p className="mt-4 text-base/7 text-white/70">
-            Enterate primero de las novedades y lanzamientos de EducAI para tu institucion o aula.
+            Sumate y sé parte de la nueva generación de enseñanza asistida por IA.
+            Te avisaremos primero cuando EducAI llegue a tu institución o aula.
           </p>
         </div>
 

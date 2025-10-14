@@ -40,11 +40,12 @@ export default function AssistantSection() {
           IA AVANZADA
         </span>
         <h2 className="mt-4 text-balance text-4xl font-extrabold tracking-tight text-white md:text-4xl lg:text-5xl">
-          Conoce a <span className="text-[#fd4c61]">EducAI</span>
+          Enseñar con IA nunca fue tan simple
         </h2>
         <p className="mt-3 text-base/7 text-white/70 md:text-lg/8">
-          Creamos herramientas para que la inteligencia artificial llegue a cada aula. Diseniamos experiencias que
-          respetan los tiempos docentes y empoderan a los estudiantes.
+          Diseñamos herramientas para que la inteligencia artificial llegue a cada aula.
+          EducAI te permite optimizar el tiempo, personalizar el aprendizaje y mejorar
+          los resultados reales de tus estudiantes.
         </p>
       </div>
 

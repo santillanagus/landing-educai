@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "EducAI",
-  description: "Plataforma de IA para la educacion",
+  description: "Plataforma de IA para la educación",
   generator: "EducAI",
 };
 

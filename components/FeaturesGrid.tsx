@@ -5,17 +5,17 @@ import { Brain, TrendingUp, Users } from "lucide-react";
 const FEATURES: Array<{ title: string; description: string; icon: LucideIcon }> = [
   {
     title: "IA avanzada",
-    description: "Algoritmos que comprenden cada entrega y generan aprendizajes accionables.",
+    description: "Modelos de IA que entienden cómo aprende cada estudiante y transforman los datos en estrategias de enseñanza más efectivas.",
     icon: Brain,
   },
   {
     title: "Para todos",
-    description: "Experiencia diseniada para docentes, estudiantes e instituciones.",
+    description: "Una experiencia pensada para docentes, estudiantes y equipos directivos que buscan innovar sin complicaciones.",
     icon: Users,
   },
   {
     title: "Resultados medibles",
-    description: "Seguimiento continuo para mejorar el desempeno en cada clase.",
+    description: "Evaluaciones continuas que te ayudan a detectar avances, desafíos y oportunidades de crecimiento.",
     icon: TrendingUp,
   },
 ];

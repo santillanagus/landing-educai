@@ -17,12 +17,12 @@ export default function Hero() {
         </div>
 
         <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/60 shadow-lg shadow-black/40 backdrop-blur">
-          La revolucion de la
+          La revolución de la
         </span>
 
         <h1 className="max-w-4xl text-balance text-4xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl">
           <TextType
-            text={["Educacion + IA"]}
+            text={["Educación + IA"]}
             showCursor
             cursorCharacter="_"
             typingSpeed={70}
@@ -33,7 +33,8 @@ export default function Hero() {
         </h1>
 
         <p className="max-w-2xl text-base/7 text-white/70 md:text-lg lg:text-xl">
-          Una plataforma que potencia la ensenanza y el aprendizaje con flujos asistidos por inteligencia artificial.
+          La inteligencia artificial que potencia tu enseñanza y el aprendizaje de tus estudiantes.
+          Simplificá tus clases, optimizá tu tiempo y descubrí una nueva forma de enseñar.
         </p>
 
         <div className="flex w-full flex-col items-center justify-start gap-3 sm:w-auto sm:flex-row">
@@ -42,7 +43,7 @@ export default function Hero() {
             className="w-full rounded-full bg-[#fd4c61] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-[#fd4c61]/40 transition hover:bg-[#fd4c61]/90 sm:w-auto"
           >
             <Link href="#demo" prefetch={false}>
-              Quiero saber mas
+              Quiero saber más
             </Link>
           </Button>
           <Button

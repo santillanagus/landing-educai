@@ -31,13 +31,13 @@ export default function SiteFooter() {
               />
             </Link>
             <p className="max-w-xs text-sm/7 text-white/60">
-              Transformamos la educacion con inteligencia artificial responsable.
+              La revolución de la educación con la inteligencia artificial.
             </p>
           </div>
           <div className="flex flex-col items-start gap-6 md:items-end">
             <div className="space-y-2 text-sm text-white/60">
               <p className="font-semibold text-white">Contacto</p>
-              <p>educai.contact@gmail.com</p>
+              <p>educai.home@gmail.com</p>
             </div>
             <div className="flex items-center gap-4">
               {SOCIAL_LINKS.map(link => (
