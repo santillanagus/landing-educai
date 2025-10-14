@@ -8,7 +8,7 @@ const SOCIAL_LINKS = [
     label: "Instagram",
   },
   {
-    href: "https://www.linkedin.com/company/educai-ia/",
+    href: "https://www.linkedin.com/company/educai-edtech/",
     label: "LinkedIn",
   },
 ];
