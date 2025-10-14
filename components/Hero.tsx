@@ -17,7 +17,7 @@ export default function Hero() {
         </div>
 
         <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/60 shadow-lg shadow-black/40 backdrop-blur">
-          La revolución de la
+          Del miedo al reemplazo ⮕ al medio para crecer
         </span>
 
         <h1 className="max-w-4xl text-balance text-4xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl">
